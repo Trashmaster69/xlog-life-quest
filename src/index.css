@@ -2,39 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* xLog Design System - RPG-inspired productivity gamification */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors */
+    --background: 220 15% 8%;
+    --foreground: 210 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card system */
+    --card: 220 15% 12%;
+    --card-foreground: 210 20% 95%;
+    --card-glow: 220 15% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover system */
+    --popover: 220 15% 10%;
+    --popover-foreground: 210 20% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* XP and Gamification colors */
+    --primary: 142 76% 36%;
+    --primary-foreground: 355 20% 98%;
+    --primary-glow: 142 76% 50%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 20% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 20 14% 4%;
+    --accent-glow: 38 92% 65%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Status colors */
+    --success: 142 76% 36%;
+    --success-foreground: 355 20% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 20 14% 4%;
+    
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* XP Progress colors */
+    --xp-bar: 142 76% 36%;
+    --xp-bar-bg: 215 28% 17%;
+    --xp-glow: 142 76% 50%;
+
+    /* Level colors */
+    --level-bronze: 25 85% 45%;
+    --level-silver: 0 0% 75%;
+    --level-gold: 45 100% 50%;
+    --level-platinum: 195 100% 85%;
+
+    /* UI elements */
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 142 76% 36%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-xp: linear-gradient(90deg, hsl(var(--xp-bar)), hsl(var(--xp-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card-glow)));
+
+    /* Shadows and glows */
+    --shadow-primary: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-accent: 0 10px 30px -10px hsl(var(--accent) / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.3);
+    --glow-primary: 0 0 20px hsl(var(--primary-glow) / 0.5);
+    --glow-accent: 0 0 20px hsl(var(--accent-glow) / 0.5);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
@@ -101,5 +142,95 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* XP Bar Component */
+  .xp-bar {
+    @apply relative h-6 bg-card border border-border rounded-full overflow-hidden;
+  }
+  
+  .xp-bar-fill {
+    @apply h-full bg-gradient-to-r from-primary to-primary-glow transition-all duration-500 ease-out;
+    box-shadow: var(--glow-primary);
+  }
+  
+  .xp-bar-text {
+    @apply absolute inset-0 flex items-center justify-center text-sm font-bold text-foreground z-10;
+  }
+
+  /* Level Badge */
+  .level-badge {
+    @apply relative inline-flex items-center justify-center w-12 h-12 rounded-full border-2 font-bold text-sm;
+    background: var(--gradient-accent);
+    border-color: hsl(var(--accent));
+    box-shadow: var(--shadow-accent);
+  }
+
+  /* Achievement Glow */
+  .achievement-glow {
+    @apply relative;
+  }
+  
+  .achievement-glow::after {
+    content: '';
+    @apply absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300;
+    background: var(--gradient-primary);
+    filter: blur(8px);
+    z-index: -1;
+  }
+  
+  .achievement-glow:hover::after {
+    @apply opacity-30;
+  }
+
+  /* Habit Card Hover */
+  .habit-card {
+    @apply relative overflow-hidden;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .habit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* Quest Complete Animation */
+  @keyframes quest-complete {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .quest-complete {
+    animation: quest-complete 0.6s ease-out;
+  }
+
+  /* Streak Counter */
+  .streak-counter {
+    @apply relative inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
+    background: var(--gradient-accent);
+    color: hsl(var(--accent-foreground));
+    box-shadow: var(--glow-accent);
+  }
+
+  /* Damage Numbers Animation */
+  @keyframes damage-number {
+    0% { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% { 
+      opacity: 0;
+      transform: translateY(-30px) scale(1.2);
+    }
+  }
+  
+  .damage-number {
+    animation: damage-number 1s ease-out forwards;
   }
 }
