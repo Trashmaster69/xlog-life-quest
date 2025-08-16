@@ -14,7 +14,241 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      habit_completions: {
+        Row: {
+          coins_earned: number
+          completed_at: string
+          habit_id: string
+          id: string
+          streak_at_completion: number
+          user_id: string
+          xp_earned: number
+        }
+        Insert: {
+          coins_earned: number
+          completed_at?: string
+          habit_id: string
+          id?: string
+          streak_at_completion: number
+          user_id: string
+          xp_earned: number
+        }
+        Update: {
+          coins_earned?: number
+          completed_at?: string
+          habit_id?: string
+          id?: string
+          streak_at_completion?: number
+          user_id?: string
+          xp_earned?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "habit_completions_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      habits: {
+        Row: {
+          best_streak: number
+          category: string
+          coin_reward: number
+          created_at: string
+          description: string | null
+          difficulty: string
+          id: string
+          is_active: boolean
+          name: string
+          streak: number
+          updated_at: string
+          user_id: string
+          xp_reward: number
+        }
+        Insert: {
+          best_streak?: number
+          category?: string
+          coin_reward?: number
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          streak?: number
+          updated_at?: string
+          user_id: string
+          xp_reward?: number
+        }
+        Update: {
+          best_streak?: number
+          category?: string
+          coin_reward?: number
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          streak?: number
+          updated_at?: string
+          user_id?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
+      journal_entries: {
+        Row: {
+          coins_earned: number
+          content: string
+          created_at: string
+          id: string
+          mood: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          xp_earned: number
+        }
+        Insert: {
+          coins_earned?: number
+          content: string
+          created_at?: string
+          id?: string
+          mood?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          xp_earned?: number
+        }
+        Update: {
+          coins_earned?: number
+          content?: string
+          created_at?: string
+          id?: string
+          mood?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          xp_earned?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_config: Json | null
+          coins: number
+          created_at: string
+          current_level_xp: number
+          display_name: string | null
+          id: string
+          level: number
+          total_xp: number
+          updated_at: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          avatar_config?: Json | null
+          coins?: number
+          created_at?: string
+          current_level_xp?: number
+          display_name?: string | null
+          id?: string
+          level?: number
+          total_xp?: number
+          updated_at?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          avatar_config?: Json | null
+          coins?: number
+          created_at?: string
+          current_level_xp?: number
+          display_name?: string | null
+          id?: string
+          level?: number
+          total_xp?: number
+          updated_at?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      shop_items: {
+        Row: {
+          asset_url: string | null
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          is_available: boolean
+          name: string
+          preview_url: string | null
+          price: number
+          rarity: string
+          unlock_level: number
+        }
+        Insert: {
+          asset_url?: string | null
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_available?: boolean
+          name: string
+          preview_url?: string | null
+          price: number
+          rarity?: string
+          unlock_level?: number
+        }
+        Update: {
+          asset_url?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_available?: boolean
+          name?: string
+          preview_url?: string | null
+          price?: number
+          rarity?: string
+          unlock_level?: number
+        }
+        Relationships: []
+      }
+      user_purchases: {
+        Row: {
+          id: string
+          purchased_at: string
+          shop_item_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          purchased_at?: string
+          shop_item_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          purchased_at?: string
+          shop_item_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_purchases_shop_item_id_fkey"
+            columns: ["shop_item_id"]
+            isOneToOne: false
+            referencedRelation: "shop_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
